@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">WXTool</string>
+    <string name="accessibility_config_desc">微信辅助工具</string>
+</resources>

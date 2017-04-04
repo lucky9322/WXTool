@@ -15,20 +15,31 @@ import com.zdd.wxtool.util.LogUtils;
 public class AccessibilityServiceHelp extends AccessibilityService {
     private static final String TAG = "AccessibilityServiceHel";
 
+    private RingHelper mRingHelper;
+
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
-        LogUtils.i(TAG,"on service connected");
+        LogUtils.i(TAG, "on service connected");
+
+        mRingHelper = new RingHelper(this);
     }
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        LogUtils.i(TAG,"on accessibility event");
+        LogUtils.i(TAG, "on accessibility event");
+        if (event.getClassName() == null) {
+            return;
+        }
+        String listenerPackageName = event.getPackageName().toString();
+        if (listenerPackageName == "com.tencent.mm") {
+            mRingHelper.onAccessibilityEvent(event);
+        }
     }
 
     @Override
     public void onInterrupt() {
-        LogUtils.i(TAG,"on interrupt");
+        LogUtils.i(TAG, "on interrupt");
 
     }
 }

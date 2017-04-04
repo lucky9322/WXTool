@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WXTool.iml" filepath="$PROJECT_DIR$/WXTool.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/recyclerview_lib/recyclerview_lib.iml" filepath="$PROJECT_DIR$/recyclerview_lib/recyclerview_lib.iml" />
     </modules>
   </component>
 </project>

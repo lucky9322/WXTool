@@ -32,7 +32,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ContactAdapter.DeleteItemCallback{
     private static final String TAG = "MainActivity";
     @BindView(R.id.list_content)
     TouchableRecyclerView mRecyclerView;
@@ -170,5 +170,10 @@ public class MainActivity extends AppCompatActivity {
                 LogUtils.i(TAG, strRingtone);
                 break;
         }
+    }
+
+    @Override
+    public void deletePosition(int position) {
+
     }
 }

@@ -1,6 +1,7 @@
 package com.zdd.wxtool.application;
 
-import android.app.Application;
+import org.litepal.LitePal;
+import org.litepal.LitePalApplication;
 
 /**
  * @CreateDate: 2017/4/2 下午9:01
@@ -9,7 +10,7 @@ import android.app.Application;
  * @Version: [v1.0]
  */
 
-public class App extends Application {
+public class App extends LitePalApplication {
     private static final String TAG = "App";
 
     private static App instance = null;
@@ -28,6 +29,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        LitePal.initialize(this);
     }
 }

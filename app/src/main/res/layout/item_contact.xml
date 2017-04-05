@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.zdd.recyclerview_lib.widget.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_contact_swipe_root"
-    android:layout_width="match_parent"
-    android:layout_height="48dp"
-    app:bga_sil_bottomMode="pullOut"
-    app:bga_sil_springDistance="20dp"
-    app:bga_sil_swipeDirection="left">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 android:id="@+id/item_contact_swipe_root"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="48dp"
+                                                 app:bga_sil_bottomMode="pullOut"
+                                                 app:bga_sil_springDistance="20dp"
+                                                 app:bga_sil_swipeDirection="left">
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:background="@color/colorPrimaryDark"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark">
 
         <TextView
             android:id="@+id/item_contact_delete"
@@ -24,10 +24,10 @@
             android:paddingRight="15dp"
             android:text="删除"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"/>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -35,12 +35,21 @@
             android:id="@+id/item_contact_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:gravity="center"
-            android:text="标题"
             android:textColor="@android:color/black"
-            android:textSize="18sp" />
-    </LinearLayout>
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/item_contact_ring"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            />
+    </RelativeLayout>
 
 </com.zdd.recyclerview_lib.widget.SwipeItemLayout>
 

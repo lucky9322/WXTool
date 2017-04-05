@@ -13,14 +13,14 @@ import java.util.List;
 
 public class ContactPeopleManager {
     private static ContactPeopleManager mManager;
-    private List<ContactModel.MembersEntity> mMembersEntities;
+    private List<ContactModel> mContactModels;
 
-    public List<ContactModel.MembersEntity> getMembersEntities() {
-        return mMembersEntities;
+    public List<ContactModel> getMembersEntities() {
+        return mContactModels;
     }
 
-    public void setMembersEntities(List<ContactModel.MembersEntity> membersEntities) {
-        mMembersEntities = membersEntities;
+    public void setMembersEntities(List<ContactModel> membersEntities) {
+        mContactModels = membersEntities;
     }
 
     public static ContactPeopleManager getInstance(){

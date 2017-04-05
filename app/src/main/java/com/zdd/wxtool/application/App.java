@@ -1,7 +1,11 @@
 package com.zdd.wxtool.application;
 
+import com.zdd.wxtool.manager.ContactPeopleManager;
+import com.zdd.wxtool.model.ContactModel;
+
 import org.litepal.LitePal;
 import org.litepal.LitePalApplication;
+import org.litepal.crud.DataSupport;
 
 /**
  * @CreateDate: 2017/4/2 下午9:01
@@ -30,5 +34,9 @@ public class App extends LitePalApplication {
     public void onCreate() {
         super.onCreate();
         LitePal.initialize(this);
+//        Stetho.initializeWithDefaults(this);
+
+        ContactPeopleManager.getInstance().
+                setMembersEntities(DataSupport.findAll(ContactModel.class));
     }
 }

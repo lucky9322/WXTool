@@ -4,69 +4,54 @@ package com.zdd.wxtool.model;
 
 import com.zdd.wxtool.widget.Indexable;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.litepal.crud.DataSupport;
 
 
-public class ContactModel {
+public class ContactModel extends DataSupport implements Indexable {
 
 
-    private List<MembersEntity> members = new ArrayList<>();
 
-    public void setMembers(List<MembersEntity> members) {
-        this.members = members;
+
+    private String username;
+    private String sortLetters;
+    private String ringName;
+    private String ringUri;
+
+    @Override
+    public String getIndex() {
+        return sortLetters;
     }
 
-    public List<MembersEntity> getMembers() {
-        return members;
+    public String getSortLetters() {
+        return sortLetters;
     }
 
 
-    public static class MembersEntity implements Indexable {
+    public void setSortLetters(String sortLetters) {
+        this.sortLetters = sortLetters;
+    }
 
-        private String id;
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-        private String username;
+    public String getUsername() {
+        return username;
+    }
 
-        private String profession;
+    public String getRingName() {
+        return ringName;
+    }
 
-        public String getSortLetters() {
-            return sortLetters;
-        }
+    public void setRingName(String ringName) {
+        this.ringName = ringName;
+    }
 
-        @Override
-        public String getIndex() {
-            return sortLetters;
-        }
+    public String getRingUri() {
+        return ringUri;
+    }
 
-        public void setSortLetters(String sortLetters) {
-            this.sortLetters = sortLetters;
-        }
-
-        private String sortLetters;
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public void setProfession(String profession) {
-            this.profession = profession;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public String getProfession() {
-            return profession;
-        }
+    public void setRingUri(String ringUri) {
+        this.ringUri = ringUri;
     }
 }

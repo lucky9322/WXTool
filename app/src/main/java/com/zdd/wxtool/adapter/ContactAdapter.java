@@ -26,22 +26,21 @@ import java.util.List;
  * <p>
  * 根据当前权限进行判断相关的滑动逻辑
  */
-public class ContactAdapter extends BaseAdapter<ContactModel.MembersEntity, ContactAdapter.ContactViewHolder>
+public class ContactAdapter extends BaseAdapter<ContactModel, ContactAdapter.ContactViewHolder>
         implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>, IndexAdapter {
     /**
      * 当前处于打开状态的item
      */
     private List<SwipeItemLayout> mOpenedSil = new ArrayList<>();
 
-    private List<ContactModel.MembersEntity> mLists;
+    private List<ContactModel> mLists;
 
     private Context mContext;
 
-    public ContactAdapter(Context ct, List<ContactModel.MembersEntity> mLists) {
+    public ContactAdapter(Context ct, List<ContactModel> mLists) {
         this.mLists = mLists;
         mContext = ct;
         this.addAll(mLists);
-
     }
 
     @Override
@@ -80,16 +79,13 @@ public class ContactAdapter extends BaseAdapter<ContactModel.MembersEntity, Cont
                 }
             }
         });
-        TextView textView = holder.mName;
-        textView.setText(getItem(position).getUsername());
-
+        holder.mName.setText(getItem(position).getUsername());
+        holder.ringName.setText(getItem(position).getRingName());
     }
 
     @Override
     public long getHeaderId(int position) {
-
         return getItem(position).getSortLetters().charAt(0);
-
     }
 
     @Override
@@ -132,12 +128,14 @@ public class ContactAdapter extends BaseAdapter<ContactModel.MembersEntity, Cont
         public TextView mName;
         public SwipeItemLayout mRoot;
         public TextView mDelete;
+        public TextView ringName;
 
         public ContactViewHolder(View itemView) {
             super(itemView);
             mName = (TextView) itemView.findViewById(R.id.item_contact_title);
             mRoot = (SwipeItemLayout) itemView.findViewById(R.id.item_contact_swipe_root);
             mDelete = (TextView) itemView.findViewById(R.id.item_contact_delete);
+            ringName=(TextView)itemView.findViewById(R.id.item_contact_ring);
         }
     }
 

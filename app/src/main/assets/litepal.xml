@@ -5,6 +5,6 @@
     <version value="1" ></version>
 
     <list>
-        <mapping class="com.example.databasetest.model.News"></mapping>
+        <mapping class="com.zdd.wxtool.model.ContactModel"></mapping>
     </list>
 </litepal>

@@ -7,6 +7,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,8 @@ import com.zdd.wxtool.model.ContactModel;
 import com.zdd.wxtool.pinyin.CharacterParser;
 import com.zdd.wxtool.pinyin.PinyinComparator;
 import com.zdd.wxtool.util.CommonUtils;
+import com.zdd.wxtool.util.LogUtils;
+import com.zdd.wxtool.util.Player;
 import com.zdd.wxtool.util.ToastUtils;
 import com.zdd.wxtool.widget.DividerDecoration;
 import com.zdd.wxtool.widget.SideBar;
@@ -39,7 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements
-        ContactAdapter.DeleteItemCallback, View.OnClickListener {
+        ContactAdapter.ItemCallback, View.OnClickListener {
     private static final String TAG = "MainActivity";
     @BindView(R.id.list_content)
     TouchableRecyclerView mRecyclerView;
@@ -73,16 +76,21 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        if (CommonUtils.isActivateAccessSeervice(MainActivity.this)){
+        if (CommonUtils.checkAccessibilityEnabled(MainActivity.this)) {
             mMainActivateTip.setVisibility(View.GONE);
-        }else {
+            mMainAdd.setClickable(true);
+            mMainAddName.setEnabled(true);
+        } else {
             mMainActivateTip.setVisibility(View.VISIBLE);
+            mMainAdd.setClickable(false);
+            mMainAddName.setEnabled(false);
         }
     }
 
     private void initView() {
         ButterKnife.bind(this);
         mMainAdd.setOnClickListener(this);
+        mMainActivateTip.setOnClickListener(this);
 
         characterParser = CharacterParser.getInstance();
         pinyinComparator = new PinyinComparator();
@@ -95,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements
         for (int i = 0; i < models.size(); i++) {
             ContactModel entity = new ContactModel();
             entity.setUsername(models.get(i).getUsername());
+            entity.setRingName(models.get(i).getRingName());
+            entity.setRingUri(models.get(i).getRingUri());
             String pinyin = characterParser.getSelling(models.get(i).getUsername());
             String sortString = pinyin.substring(0, 1).toUpperCase();
 
@@ -108,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements
         Collections.sort(mMembers, pinyinComparator);
 
         mAdapter = new ContactAdapter(this, mMembers);
-        mAdapter.setDeleteItemCallback(this);
+        mAdapter.setItemCallback(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
 
@@ -182,6 +192,7 @@ public class MainActivity extends AppCompatActivity implements
                 Collections.sort(mMembers, pinyinComparator);
                 mAdapter.add(mMembers.indexOf(itemModel), itemModel);
                 itemModel = null;
+
                 break;
         }
     }
@@ -194,14 +205,32 @@ public class MainActivity extends AppCompatActivity implements
         DataSupport.deleteAll(ContactModel.class, "username = ?", username);
     }
 
+    @Override
+    public void itemClick(int position) {
+        try {
+            LogUtils.i(TAG,mAdapter.getItem(position).getRingUri());
+//            MediaPlayer mediaPlayer = new MediaPlayer();
+//            mediaPlayer.setDataSource(MainActivity.this,
+//                    Uri.parse(mAdapter.getItem(position).getRingUri()));
+//            mediaPlayer.prepare();
+//            mediaPlayer.start();
+
+            Player player=new Player(MainActivity.this);
+            player.playUrl(mAdapter.getItem(position).getRingUri());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_add:
-                if (!CommonUtils.isActivateAccessSeervice(MainActivity.this)){
+                if (!CommonUtils.isActivateAccessSeervice(MainActivity.this)) {
                     ToastUtils.makeText(MainActivity.this,
-                            getResources().getString(R.string.main_activate_tip),ToastUtils.LENGTH_SHORT)
+                            getResources().getString(R.string.main_activate_tip), ToastUtils.LENGTH_SHORT)
                             .show();
                     return;
                 }
@@ -225,6 +254,15 @@ public class MainActivity extends AppCompatActivity implements
 
                 doPickSmsRingtone();
                 break;
+            case R.id.main_activate_tip:
+                goToSetting();
+                break;
         }
+    }
+
+    private void goToSetting() {
+        Intent settingIntent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+        settingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(settingIntent);
     }
 }

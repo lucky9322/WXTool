@@ -1,9 +1,13 @@
 package com.zdd.wxtool.accessibility;
 
 import android.accessibilityservice.AccessibilityService;
+import android.content.Context;
 import android.view.accessibility.AccessibilityEvent;
 
+import com.zdd.wxtool.manager.ContactPeopleManager;
+import com.zdd.wxtool.model.ContactModel;
 import com.zdd.wxtool.util.LogUtils;
+import com.zdd.wxtool.util.Player;
 
 import java.util.List;
 
@@ -28,16 +32,22 @@ public class RingHelper {
      *
      * @param event
      */
-    public void onAccessibilityEvent(AccessibilityEvent event) {
+    public void onAccessibilityEvent(Context context,AccessibilityEvent event) {
         int type = event.getEventType();
         switch (type) {
             case AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED:
                 List<CharSequence> text = event.getText();
                 if (!text.isEmpty()) {
+                    LogUtils.i(TAG, "on receive lucky message000");
                     for (CharSequence itemMsg :
                             text) {
-                        if (itemMsg.toString().contains("Lucky")) {
-                            LogUtils.i(TAG, "on receive lucky message");
+                        List<ContactModel> entities = ContactPeopleManager.getInstance().getMembersEntities();
+                        for (int i = 0; i < entities.size(); i++) {
+
+                            if (itemMsg.toString().toLowerCase().contains(entities.get(i).getUsername().toLowerCase())) {
+                                Player player=new Player(context);
+                                player.playUrl(entities.get(i).getRingUri());
+                            }
                         }
                     }
                 }

@@ -71,6 +71,14 @@ public class ContactAdapter extends BaseAdapter<ContactModel, ContactAdapter.Con
                 closeOpenedSwipeItemLayoutWithAnim();
             }
         });
+        swipeRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null!=mDeleteItemCallback){
+                    mDeleteItemCallback.itemClick(position);
+                }
+            }
+        });
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,13 +147,14 @@ public class ContactAdapter extends BaseAdapter<ContactModel, ContactAdapter.Con
         }
     }
 
-    private DeleteItemCallback mDeleteItemCallback;
+    private ItemCallback mDeleteItemCallback;
 
-    public void setDeleteItemCallback(DeleteItemCallback deleteItemCallback) {
+    public void setItemCallback(ItemCallback deleteItemCallback) {
         mDeleteItemCallback = deleteItemCallback;
     }
 
-    public interface DeleteItemCallback {
+    public interface ItemCallback {
         public void deletePosition(int position);
+        void itemClick(int position);
     }
 }

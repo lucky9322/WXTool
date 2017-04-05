@@ -32,8 +32,8 @@ public class AccessibilityServiceHelp extends AccessibilityService {
             return;
         }
         String listenerPackageName = event.getPackageName().toString();
-        if (listenerPackageName == "com.tencent.mm") {
-            mRingHelper.onAccessibilityEvent(event);
+        if (listenerPackageName .equals("com.tencent.mm")) {
+            mRingHelper.onAccessibilityEvent(this,event);
         }
     }
 

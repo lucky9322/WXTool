@@ -1,9 +1,13 @@
 package com.zdd.wxtool.util;
 
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Context;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.accessibility.AccessibilityManager;
+
+import java.util.List;
 
 /**
  * @CreateDate: 2017/4/5 下午6:43
@@ -22,7 +26,7 @@ public class CommonUtils {
      */
     public static boolean isActivateAccessSeervice(Context mContext) {
         int accessibilityEnabled = 0;
-        final String service = "com.zdd.wxtool.accessibility/com.zdd.wxtool.accessibility.AccessibilityServiceHelp";
+        final String service = "com.zdd.wxtool/com.zdd.wxtool.accessibility.AccessibilityServiceHelp";
 //        final String service = getPackageName() + "/" + YOURAccessibilityService.class.getCanonicalName();
         try {
             accessibilityEnabled = Settings.Secure.getInt(
@@ -56,6 +60,26 @@ public class CommonUtils {
             Log.v(TAG, "***ACCESSIBILITY IS DISABLED***");
         }
 
+        return false;
+    }
+
+    /**
+     * Check当前辅助服务是否启用
+     *
+     * @param
+     * @return 是否启用
+     */
+    public static boolean checkAccessibilityEnabled(Context context) {
+        final String serviceName = "com.zdd.wxtool/.accessibility.AccessibilityServiceHelp";
+
+        List<AccessibilityServiceInfo> accessibilityServices =
+                ((AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE)).
+                        getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_GENERIC);
+        for (AccessibilityServiceInfo info : accessibilityServices) {
+            if (info.getId().equals(serviceName)) {
+                return true;
+            }
+        }
         return false;
     }
 }

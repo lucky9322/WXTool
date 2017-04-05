@@ -1,5 +1,6 @@
 package com.zdd.wxtool.application;
 
+import com.facebook.stetho.Stetho;
 import com.zdd.wxtool.manager.ContactPeopleManager;
 import com.zdd.wxtool.model.ContactModel;
 
@@ -34,7 +35,7 @@ public class App extends LitePalApplication {
     public void onCreate() {
         super.onCreate();
         LitePal.initialize(this);
-//        Stetho.initializeWithDefaults(this);
+        Stetho.initializeWithDefaults(this);
 
         ContactPeopleManager.getInstance().
                 setMembersEntities(DataSupport.findAll(ContactModel.class));

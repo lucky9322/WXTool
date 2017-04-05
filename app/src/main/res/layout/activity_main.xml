@@ -7,6 +7,12 @@
     android:orientation="vertical"
     tools:context="com.zdd.wxtool.ui.MainActivity">
 
+    <TextView
+        android:id="@+id/main_activate_tip"
+        android:visibility="gone"
+        android:text="@string/accessibility_config_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

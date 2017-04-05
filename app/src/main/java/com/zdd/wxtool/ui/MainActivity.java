@@ -23,6 +23,7 @@ import com.zdd.wxtool.manager.ContactPeopleManager;
 import com.zdd.wxtool.model.ContactModel;
 import com.zdd.wxtool.pinyin.CharacterParser;
 import com.zdd.wxtool.pinyin.PinyinComparator;
+import com.zdd.wxtool.util.CommonUtils;
 import com.zdd.wxtool.util.ToastUtils;
 import com.zdd.wxtool.widget.DividerDecoration;
 import com.zdd.wxtool.widget.SideBar;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements
     Button mMainAdd;
     @BindView(R.id.main_add_name)
     EditText mMainAddName;
+    @BindView(R.id.main_activate_tip)
+    TextView mMainActivateTip;
 
     private List<ContactModel> mMembers = new ArrayList<>();
     private CharacterParser characterParser;
@@ -65,6 +68,16 @@ public class MainActivity extends AppCompatActivity implements
         initView();
 
         setUI();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (CommonUtils.isActivateAccessSeervice(MainActivity.this)){
+            mMainActivateTip.setVisibility(View.GONE);
+        }else {
+            mMainActivateTip.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initView() {
@@ -186,6 +199,12 @@ public class MainActivity extends AppCompatActivity implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_add:
+                if (!CommonUtils.isActivateAccessSeervice(MainActivity.this)){
+                    ToastUtils.makeText(MainActivity.this,
+                            getResources().getString(R.string.main_activate_tip),ToastUtils.LENGTH_SHORT)
+                            .show();
+                    return;
+                }
                 if (TextUtils.isEmpty(mMainAddName.getText().toString())) {
                     ToastUtils.makeText(MainActivity.this,
                             getResources().getString(R.string.content_name_empty),

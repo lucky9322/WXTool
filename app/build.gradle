@@ -33,7 +33,10 @@ android {
         release {
             minifyEnabled true
             signingConfig signingConfigs.releaseSignCfg
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard-rules.pro',
+                    'proguard-litepal.pro',
+                    'proguard-butterknife.pro'
         }
         debug {
             signingConfig signingConfigs.debugSignCfg

@@ -2,4 +2,5 @@
     <string name="app_name">WXTool</string>
     <string name="accessibility_config_desc">微信辅助工具</string>
     <string name="content_name_empty">请输入联系人备注</string>
+    <string name="main_activate_tip">请开启开启插件服务</string>
 </resources>

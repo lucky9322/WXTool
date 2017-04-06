@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements
     public void deletePosition(int position) {
         String username = mMembers.get(position).getUsername();
         mAdapter.remove(mMembers.get(position));
-
+        ContactPeopleManager.getInstance().setSordedContactModels(mMembers);
         DataSupport.deleteAll(ContactModel.class, "username = ?", username);
     }
 

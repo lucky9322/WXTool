@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements
             mMembers.add(entity);
         }
         Collections.sort(mMembers, pinyinComparator);
+        ContactPeopleManager.getInstance().setSordedContactModels(mMembers);
 
         mAdapter = new ContactAdapter(this, mMembers);
         mAdapter.setItemCallback(this);
@@ -187,10 +188,11 @@ public class MainActivity extends AppCompatActivity implements
                 itemModel.setRingUri(pickedUri.toString());
                 itemModel.save();
 
-                ContactPeopleManager.getInstance().getMembersEntities().add(itemModel);
                 mMembers.add(itemModel);
                 Collections.sort(mMembers, pinyinComparator);
                 mAdapter.add(mMembers.indexOf(itemModel), itemModel);
+                ContactPeopleManager.getInstance().setSordedContactModels(mMembers);
+
                 itemModel = null;
 
                 break;
@@ -209,12 +211,6 @@ public class MainActivity extends AppCompatActivity implements
     public void itemClick(int position) {
         try {
             LogUtils.i(TAG,mAdapter.getItem(position).getRingUri());
-//            MediaPlayer mediaPlayer = new MediaPlayer();
-//            mediaPlayer.setDataSource(MainActivity.this,
-//                    Uri.parse(mAdapter.getItem(position).getRingUri()));
-//            mediaPlayer.prepare();
-//            mediaPlayer.start();
-
             Player player=new Player(MainActivity.this);
             player.playUrl(mAdapter.getItem(position).getRingUri());
 
